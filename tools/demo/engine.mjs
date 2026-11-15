@@ -37,13 +37,23 @@ export async function startRecorder({ url, outDir, quality = DRY ? 'low' : 'high
     await page.clock.runFor(frameMs);
     if (rec.recording && DRY) rec.frame++;
     else if (rec.recording) {
-      const { data } = await cdp.send('Page.captureScreenshot', { format: 'jpeg', quality: jpegQuality, optimizeForSpeed: true, fromSurface: true });
-      writes.push(fs.promises.writeFile(path.join(outDir, `f_${String(rec.frame).padStart(5, '0')}.jpg`), Buffer.from(data, 'base64')));
+      // Make sure the GPU has finished drawing, then capture; if the picture is suspiciously small (a half-presented, black 3D canvas) take it again.
+      await page.evaluate(() => { for (const c of document.querySelectorAll('canvas')) { const gl = c.getContext('webgl2') || c.getContext('webgl'); gl?.finish?.(); } });
+      let shot = Buffer.alloc(0);
+      for (let attempt = 0; attempt < 6; attempt++) {
+        const { data } = await cdp.send('Page.captureScreenshot', { format: 'jpeg', quality: jpegQuality, optimizeForSpeed: true, fromSurface: true });
+        shot = Buffer.from(data, 'base64');
+        const prev = rec.lastSize ?? 0;
+        if (!(prev > 150000 && shot.length < prev * 0.55)) break; // plausible frame
+        rec.retakes = (rec.retakes ?? 0) + 1; await page.waitForTimeout(40 + attempt * 40);
+      }
+      rec.lastSize = shot.length;
+      writes.push(fs.promises.writeFile(path.join(outDir, `f_${String(rec.frame).padStart(5, '0')}.jpg`), shot));
       if (writes.length > 24) await Promise.all(writes.splice(0));
       rec.frame++;
     }
   }
-  rec.frames = async (n) => { for (let i = 0; i < n; i++) await frameOnce(); };
+  rec.frames = async (n) => { for (let i = 0; i < n; i++) { await frameOnce(); if (process.env.STOP_SEC && rec.frame / FPS >= +process.env.STOP_SEC) { await rec.finish(); process.exit(0); } } };
   rec.wait = (sec) => rec.frames(Math.round(sec * FPS));
   rec.now = () => rec.frame / FPS;
   rec.untilFrame = async (f) => { const n = f - rec.frame; if (n < 0) console.log(`  !! story overran by ${(-n / FPS).toFixed(2)}s`); else await rec.frames(n); };
@@ -72,7 +82,12 @@ export async function startRecorder({ url, outDir, quality = DRY ? 'low' : 'high
   rec.caption = (text, { fade = 350 } = {}) => page.evaluate(([t, f]) => window.__caption(t, f), [text, fade]);
   rec.card = (html, { fade = 500 } = {}) => page.evaluate(([h, f]) => window.__card(h, f), [html, fade]);
 
-  rec.finish = async () => { rec.recording = false; await Promise.all(writes); await browser.close(); fs.writeFileSync(path.join(outDir, '..', 'timeline.json'), JSON.stringify({ fps: FPS, frames: rec.frame, marks: rec.marks, skipped: rec.skipped, errors }, null, 2)); };
+  rec.finish = async () => {
+    rec.recording = false; await Promise.all(writes); await browser.close();
+    const tlFile = path.join(outDir, '..', 'timeline.json'); let prevMarks = {};
+    try { prevMarks = JSON.parse(fs.readFileSync(tlFile, 'utf8')).marks ?? {}; } catch { /* first run */ }
+    fs.writeFileSync(tlFile, JSON.stringify({ fps: FPS, frames: rec.frame, marks: { ...prevMarks, ...rec.marks }, skipped: rec.skipped, retakes: rec.retakes ?? 0, errors }, null, 2));
+  };
   return rec;
 }
 

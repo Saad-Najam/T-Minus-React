@@ -20,7 +20,7 @@ import { WiringGraph } from '../engine/wiring.js';
 import { validateWiring } from '../engine/wiring.js';
 import { Severity } from '../engine/severity.js';
 import { openCodex } from '../components/HoustonPanel.jsx';
-import { useQuality } from '../state/quality.js';
+import { glProps, useQuality } from '../state/quality.js';
 
 const CATS = [['eps', 'Power'], ['battery', 'Battery'], ['switch', 'Switch'], ['obc', 'Computer'], ['radio', 'Radio'], ['antenna', 'Antenna'], ['adcs', 'ADCS'], ['camera', 'Camera'], ['solar', 'Solar']];
 const COLUMN = { solar: 0, battery: 0, switch: 0, eps: 1, obc: 2, adcs: 2, camera: 2, radio: 3, antenna: 3 };
@@ -101,7 +101,7 @@ export default function IntegrationBay() {
           <div className="panel relative min-h-0 flex-1 overflow-hidden">
             {tab === 'build' ? (
               <>
-                <Canvas shadows={q.shadows} camera={{ position: [4.4, 2.5, 6.0], fov: 36 }} dpr={q.dpr} onPointerMissed={() => { setSelected(null); useGame.setState({ held: null }); }}>
+                <Canvas shadows={q.shadows} camera={{ position: [4.4, 2.5, 6.0], fov: 36 }} dpr={q.dpr} gl={glProps()} onPointerMissed={() => { setSelected(null); useGame.setState({ held: null }); }}>
                   <color attach="background" args={['#060b18']} />
                   <fog attach="fog" args={['#060b18', 10, 30]} />
                   <Suspense fallback={null}>

@@ -6,7 +6,7 @@ import { useGame } from '../state/store.js';
 import { SpaceBackdrop } from '../three/Earth3D.jsx';
 import Effects from '../three/Effects.jsx';
 import { Modal } from '../components/ui.jsx';
-import { useQuality } from '../state/quality.js';
+import { glProps, useQuality } from '../state/quality.js';
 
 const item = { hidden: { opacity: 0, x: -24 }, show: (i) => ({ opacity: 1, x: 0, transition: { delay: 0.25 + i * 0.07, duration: 0.45, ease: 'easeOut' } }) };
 
@@ -38,7 +38,7 @@ export default function MainMenu() {
 
   return (
     <div className="relative h-full overflow-hidden">
-      <Canvas className="!absolute inset-0" camera={{ position: [0, 0, 9], fov: 42 }} dpr={q.dpr} gl={{ antialias: true, powerPreference: 'high-performance' }}>
+      <Canvas className="!absolute inset-0" camera={{ position: [0, 0, 9], fov: 42 }} dpr={q.dpr} gl={glProps()}>
         <SpaceBackdrop data={data} />
         <Effects bloom={0.8} threshold={0.7} vignette={0.7} />
       </Canvas>

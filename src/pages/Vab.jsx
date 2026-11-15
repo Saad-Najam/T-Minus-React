@@ -16,7 +16,7 @@ import LaunchPad3D from '../three/LaunchPad3D.jsx';
 import CubeSat3D from '../three/CubeSat3D.jsx';
 import { openCodex } from '../components/HoustonPanel.jsx';
 import { STAND } from '../engine/assembly.js';
-import { useQuality } from '../state/quality.js';
+import { glProps, useQuality } from '../state/quality.js';
 import Effects from '../three/Effects.jsx';
 
 const STATE_STYLE = {
@@ -133,7 +133,7 @@ export default function Vab() {
       <Frame screen="vab" title={rocket?.name ?? 'Rocket'} right={<button className="btn btn-primary btn-sm" onClick={() => game.go('pad')}>To the pad <ArrowRight size={14} /></button>}>
         <div className="grid min-h-0 gap-3 lg:h-full lg:grid-cols-[minmax(0,1fr)_340px]">
           <div className="panel relative overflow-hidden">
-            <Canvas shadows={q.shadows} camera={{ position: [28, 30, 60], fov: 40, near: 0.5, far: 600 }} dpr={q.dpr}>
+            <Canvas shadows={q.shadows} camera={{ position: [28, 30, 60], fov: 40, near: 0.5, far: 600 }} dpr={q.dpr} gl={glProps()}>
               <Scene layout={layout} data={data} graph={{ isAttached: () => true, freeSockets: () => [] }} vehicle={vehicle} selectedJoint={null} rules={{ boltJoints: [], getJoint: () => null }} spacecraftParts={[]} rocketId={rocket.id} />
             </Canvas>
             <div className="pointer-events-none absolute left-3 top-3 text-[11px] text-mute">Inspect only · drag to orbit · scroll to zoom</div>
@@ -181,7 +181,7 @@ export default function Vab() {
 
         {/* 3D */}
         <div className="panel relative h-[65vh] min-h-0 overflow-hidden lg:h-auto">
-          <Canvas shadows={q.shadows} camera={{ position: [8, 8, 14], fov: 38, near: 0.1, far: 400 }} dpr={q.dpr}>
+          <Canvas shadows={q.shadows} camera={{ position: [8, 8, 14], fov: 38, near: 0.1, far: 400 }} dpr={q.dpr} gl={glProps()}>
             <Scene layout={layout} data={data} graph={graph} vehicle={vehicle} selectedJoint={selectedJoint} onBolt={clickBolt} nextBolt={nextBolt} stackGhost={nextGhost}
               rules={rules} payloadMounted={payloadMounted} spacecraftParts={spacecraft.parts} rocketId={vehicle.rocketId} />
           </Canvas>

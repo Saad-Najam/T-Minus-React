@@ -6,14 +6,14 @@ import Cables3D from './Cables3D.jsx';
 import Effects from './Effects.jsx';
 import { StudioLights } from './Studio.jsx';
 import { Pedestal } from './Pedestal.jsx';
-import { useQuality } from '../state/quality.js';
+import { glProps, useQuality } from '../state/quality.js';
 
 /** The same wiring, seen on the real satellite: a live 3D loom next to the schematic bench. */
 export default function LoomView({ spacecraft, data }) {
   const q = useQuality();
   return (
     <div className="panel relative h-72 overflow-hidden xl:h-full" aria-label="3D view of the wiring loom">
-      <Canvas camera={{ position: [2.4, 1.9, 3.2], fov: 40 }} dpr={q.dpr} shadows={q.shadows}>
+      <Canvas camera={{ position: [2.4, 1.9, 3.2], fov: 40 }} dpr={q.dpr} shadows={q.shadows} gl={glProps()}>
         <color attach="background" args={['#060b18']} />
         <Suspense fallback={null}>
           <StudioLights intensity={0.9} />

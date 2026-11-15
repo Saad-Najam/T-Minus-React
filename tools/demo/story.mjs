@@ -5,7 +5,7 @@ import { startRecorder, OVERLAY, FPS } from './engine.mjs';
 
 const URL = process.env.URL || 'http://localhost:5300/?hooks';
 const only = process.env.SCENES ? process.env.SCENES.split(',').map(Number) : null;
-const outDir = process.env.DRY ? 'demo-work/dry' : only ? 'demo-work/test' : 'demo-work/frames';
+const outDir = process.env.FRAMES_DIR || (process.env.DRY ? 'demo-work/dry' : only ? 'demo-work/test' : 'demo-work/frames');
 // scene boundaries (seconds of video)
 const T = { s1: 0, s2: 10, s3: 22, s4: 52.5, s5: 79, s6: 101, s7: 111, s8: 141, s9: 154, s10: 171, end: 180 };
 
@@ -25,7 +25,7 @@ await g(() => { const s = window.__game.getState(); s.selectMission('moonshot');
 await g(() => { const s = window.__game.getState(); s.newBuild(); s.selectMission('floodwatch_1'); s.go('menu'); }); await page.waitForTimeout(1500);
 await page.evaluate(OVERLAY);
 { const t = await g(() => Date.now()); await page.clock.pauseAt(new Date(t + 300)); await page.waitForTimeout(700); }
-rec.recording = true; rec.frame = 0;
+rec.recording = true; rec.frame = process.env.START_FRAME ? +process.env.START_FRAME : 0;
 console.log('recording', only ? `scenes ${only}` : 'full demo');
 
 // ------------------------------------------------------------------ state shortcuts for partial runs

@@ -10,7 +10,7 @@ import FlightScene from '../three/FlightScene.jsx';
 import { EngineSound, blip } from '../audio.js';
 import { Panel } from '../components/ui.jsx';
 import { Modal } from '../components/ui.jsx';
-import { useQuality } from '../state/quality.js';
+import { glProps, useQuality } from '../state/quality.js';
 
 const MODES = [['chase', 'Chase'], ['ground', 'Ground'], ['map', 'Map']];
 const fmt = (n, d = 0) => (Number.isFinite(n) ? n.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d }) : '—');
@@ -147,7 +147,7 @@ export default function Flight() {
 
   return (
     <div className={`relative h-full overflow-hidden bg-black ${session.exploded != null && !ended ? 'shake' : ''}`}>
-      <Canvas shadows={q.shadows} camera={{ position: [10, 3, 22], fov: 42, near: 0.5, far: 30000 }} dpr={q.dpr} gl={{ antialias: true, powerPreference: 'high-performance' }}>
+      <Canvas shadows={q.shadows} camera={{ position: [10, 3, 22], fov: 42, near: 0.5, far: 30000 }} dpr={q.dpr} gl={glProps()}>
         <Suspense fallback={null}><FlightScene session={session} mode={mode} xray={xray} settings={settings} /></Suspense>
       </Canvas>
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_55%,rgba(0,0,0,0.55))]" />
