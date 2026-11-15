@@ -1,0 +1,9 @@
+node_modules
+dist
+shots
+*.log
+.vercel
+.env*
+*.mp4
+*.wav
+demo-work

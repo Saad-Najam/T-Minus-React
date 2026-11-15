@@ -1,0 +1,25 @@
+// Visual + feature check at HIGH quality: 3D loom, Saturn V, flight FX (smoke, trail, clouds), replay scrubber, camera modes. Writes screenshots to shots/.
+import { chromium } from 'playwright';
+import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
+const url = process.argv[2] || 'http://localhost:5175/';
+const out = fileURLToPath(new URL('../../shots/', import.meta.url));
+fs.mkdirSync(out, { recursive: true });
+const browser = await chromium.launch({ args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
+const page = await browser.newPage({ viewport: { width: 1100, height: 680 } });
+const errors = [];
+page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
+page.on('pageerror', (e) => errors.push(e.message));
+await page.addInitScript(() => localStorage.setItem('tminus.settings.v1', JSON.stringify({ quality: 'medium' })));
+const st = (fn, a) => page.evaluate(fn, a);
+const shot = async (n, w = 1800) => { await page.waitForTimeout(w); await page.screenshot({ path: `${out}vis-${n}.png`, timeout: 180000 }); console.log('shot', n); };
+await page.goto(url); await page.waitForSelector('h1'); await shot('menu', 2500);
+await st(() => { const g = window.__game.getState(); g.applyDemo({ padReady: true }); g.go('bay'); }); await shot('bay', 3500);
+await st(() => document.querySelector('button')); await page.evaluate(() => [...document.querySelectorAll('button')].find((b) => /^Wire$/.test(b.textContent.trim()))?.click()); await shot('bay-wire-loom', 3500);
+await st(() => { const g = window.__game.getState(); g.selectMission('moonshot'); g.go('vab'); }); await shot('saturn-vab', 4000);
+await st(() => { const g = window.__game.getState(); g.applyDemo({ padReady: true }); g.commitLaunch(); g.go('flight'); }); await page.waitForSelector('text=Terminal count', { timeout: 120000 });
+await page.evaluate(() => [...document.querySelectorAll('button')].find((b) => /Launch now/.test(b.textContent))?.click()); await shot('flight-liftoff', 3000); await shot('flight-ascent', 12000);
+await page.evaluate(() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'c' }))); await shot('flight-ground', 2500);
+await page.evaluate(() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'c' }))); await shot('flight-map', 2500);
+console.log(errors.length ? 'CONSOLE ERRORS:\n' + errors.slice(0, 10).join('\n') : 'No console errors.');
+await browser.close(); process.exit(errors.length ? 1 : 0);

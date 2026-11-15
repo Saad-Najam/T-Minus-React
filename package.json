@@ -1,0 +1,43 @@
+{
+  "name": "t-pulse-react",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "T-MINUS: Rocket & Mission Builder — React / Three.js web edition (NASA Space Apps Challenge 2026)",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:e2e": "node tests/e2e/smoke.mjs && node tests/e2e/playthrough.mjs && node tests/e2e/modes.mjs",
+    "convert-models": "node tools/convert-models.mjs"
+  },
+  "dependencies": {
+    "@react-three/drei": "^9.114.3",
+    "@react-three/fiber": "^8.17.10",
+    "@react-three/postprocessing": "^2.16.3",
+    "framer-motion": "^11.11.17",
+    "lucide-react": "^0.454.0",
+    "postprocessing": "^6.36.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "three": "^0.169.0",
+    "zustand": "^5.0.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.3",
+    "autoprefixer": "^10.4.20",
+    "playwright": "^1.48.2",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.14",
+    "vite": "^5.4.10",
+    "vitest": "^2.1.4"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Saad-Najam/T-Pulse-React.git"
+  }
+}

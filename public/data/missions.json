@@ -1,0 +1,441 @@
+{
+  "missions": [
+    {
+      "id": "floodwatch_1",
+      "name": "FloodWatch-1",
+      "priority": "P0",
+      "difficulty": "Beginner / Intermediate",
+      "startHere": true,
+      "objective": "Image the Indus floodplain for 30 days and downlink at least 20 usable images.",
+      "description": "In 2022 record monsoon rains flooded a third of Pakistan and Lake Manchar burst its banks. Build a 3U CubeSat that watches the floodplain from orbit.",
+      "rocketOptions": [ "pathfinder" ],
+      "payloadType": "cubesat_3u",
+      "budgetMUSD": 7.72,
+      "massLimitKg": 4.0,
+      "orbitOptionsKm": [ 400, 550, 800 ],
+      "defaultOrbitKm": 550,
+      "launchSites": [ "sonmiani", "cape_canaveral" ],
+      "durationDays": 30,
+      "groundContactsPerDay": 4,
+      "contactMinutes": 8,
+      "imagingPassesPerDay": 1,
+      "imagesPerPass": 3,
+      "seed": 1962,
+      "illustrative": true,
+      "notes": "Budget = 7.5 M USD launch + 220 k USD spacecraft, so the premium HD build only just fits. Mass limit is a game value.",
+      "successCriteria": [
+        { "id": "reach_orbit", "text": "Reach orbit and deploy the CubeSat", "metric": "deployed", "threshold": 1 },
+        { "id": "survive_30d", "text": "Keep the satellite alive for 30 days", "metric": "daysAlive", "threshold": 30 },
+        { "id": "images_20", "text": "Downlink at least 20 usable images", "metric": "imagesDownlinked", "threshold": 20 },
+        { "id": "on_budget", "text": "Stay within the 7.72 M USD budget", "metric": "costMUSD", "threshold": 7.72 }
+      ],
+      "randomEvents": [
+        { "id": "ev_solar_storm", "day": 12, "type": "solar_storm", "effect": "computer_reboot", "value": 1, "codexId": "data_budget" },
+        { "id": "ev_ground_outage", "day": 20, "type": "ground_outage", "effect": "no_downlink", "value": 1, "codexId": "downlink" },
+        { "id": "ev_battery_ageing", "day": 25, "type": "battery_ageing", "effect": "capacity_loss", "value": 10, "codexId": "battery_dod" }
+      ],
+      "scoring": { "success": 40, "science": 25, "budget": 10, "margins": 10, "decisionQuality": 10, "collaboration": 5 },
+      "rewardImages": [
+        { "date": "2022-06-25", "title": "Lake Manchar before the floods", "resource": "Images/Landsat/manchar_2022_06_25", "sourceUrl": "https://science.nasa.gov/earth/earth-observatory/lake-manchar-is-overflowing-150306/" },
+        { "date": "2022-08-28", "title": "Lake Manchar overflowing", "resource": "Images/Landsat/manchar_2022_08_28", "sourceUrl": "https://science.nasa.gov/earth/earth-observatory/lake-manchar-is-overflowing-150306/" },
+        { "date": "2022-09-05", "title": "Floodwater spreading across the plain", "resource": "Images/Landsat/manchar_2022_09_05", "sourceUrl": "https://science.nasa.gov/earth/earth-observatory/lake-manchar-is-overflowing-150306/" }
+      ],
+      "rewardCredit": "NASA Earth Observatory images by Joshua Stevens, using Landsat data from the U.S. Geological Survey.",
+      "codexIds": [ "landsat", "gsd", "downlink", "eclipse", "battery_dod" ]
+    },
+    {
+      "id": "floodwatch_tight",
+      "name": "FloodWatch-1: Tight budget",
+      "priority": "P1",
+      "difficulty": "Intermediate",
+      "objective": "Same flood-watch satellite, but the budget only just covers the basic build. No premium parts.",
+      "description": "The mission is funded, but the budget committee cut the margin to almost nothing. Build the cheapest satellite that still returns 20 images.",
+      "rocketOptions": [
+        "pathfinder"
+      ],
+      "payloadType": "cubesat_3u",
+      "budgetMUSD": 7.62,
+      "massLimitKg": 4.0,
+      "orbitOptionsKm": [
+        400,
+        550,
+        800
+      ],
+      "defaultOrbitKm": 550,
+      "launchSites": [
+        "sonmiani",
+        "cape_canaveral"
+      ],
+      "durationDays": 30,
+      "groundContactsPerDay": 4,
+      "contactMinutes": 8,
+      "imagingPassesPerDay": 1,
+      "imagesPerPass": 3,
+      "seed": 1962,
+      "illustrative": true,
+      "notes": "Challenge variant of FloodWatch-1: 7.62 M USD against a launch of 7.5 M USD leaves about 120 k USD for the whole CubeSat.",
+      "successCriteria": [
+        {
+          "id": "reach_orbit",
+          "text": "Reach orbit and deploy the CubeSat",
+          "metric": "deployed",
+          "threshold": 1
+        },
+        {
+          "id": "survive_30d",
+          "text": "Keep the satellite alive for 30 days",
+          "metric": "daysAlive",
+          "threshold": 30
+        },
+        {
+          "id": "images_20",
+          "text": "Downlink at least 20 usable images",
+          "metric": "imagesDownlinked",
+          "threshold": 20
+        },
+        {
+          "id": "on_budget",
+          "text": "Stay within the 7.62 M USD budget",
+          "metric": "costMUSD",
+          "threshold": 7.62
+        }
+      ],
+      "randomEvents": [
+        {
+          "id": "ev_solar_storm",
+          "day": 12,
+          "type": "solar_storm",
+          "effect": "computer_reboot",
+          "value": 1,
+          "codexId": "data_budget"
+        },
+        {
+          "id": "ev_ground_outage",
+          "day": 20,
+          "type": "ground_outage",
+          "effect": "no_downlink",
+          "value": 1,
+          "codexId": "downlink"
+        },
+        {
+          "id": "ev_battery_ageing",
+          "day": 25,
+          "type": "battery_ageing",
+          "effect": "capacity_loss",
+          "value": 10,
+          "codexId": "battery_dod"
+        }
+      ],
+      "scoring": {
+        "success": 40,
+        "science": 25,
+        "budget": 10,
+        "margins": 10,
+        "decisionQuality": 10,
+        "collaboration": 5
+      },
+      "rewardImages": [
+        {
+          "date": "2022-06-25",
+          "title": "Lake Manchar before the floods",
+          "resource": "Images/Landsat/manchar_2022_06_25",
+          "sourceUrl": "https://science.nasa.gov/earth/earth-observatory/lake-manchar-is-overflowing-150306/"
+        },
+        {
+          "date": "2022-08-28",
+          "title": "Lake Manchar overflowing",
+          "resource": "Images/Landsat/manchar_2022_08_28",
+          "sourceUrl": "https://science.nasa.gov/earth/earth-observatory/lake-manchar-is-overflowing-150306/"
+        },
+        {
+          "date": "2022-09-05",
+          "title": "Floodwater spreading across the plain",
+          "resource": "Images/Landsat/manchar_2022_09_05",
+          "sourceUrl": "https://science.nasa.gov/earth/earth-observatory/lake-manchar-is-overflowing-150306/"
+        }
+      ],
+      "rewardCredit": "NASA Earth Observatory images by Joshua Stevens, using Landsat data from the U.S. Geological Survey.",
+      "codexIds": [
+        "landsat",
+        "gsd",
+        "downlink",
+        "eclipse",
+        "battery_dod"
+      ]
+    },
+    {
+      "id": "floodwatch_light",
+      "name": "FloodWatch-1: Featherweight",
+      "priority": "P1",
+      "difficulty": "Intermediate",
+      "objective": "Same flood-watch satellite, but the whole CubeSat may weigh at most 1.8 kg.",
+      "description": "A smaller dispenser means a smaller mass allowance. Every gram counts: choose lighter parts and think about which ones you really need.",
+      "rocketOptions": [
+        "pathfinder"
+      ],
+      "payloadType": "cubesat_3u",
+      "budgetMUSD": 7.72,
+      "massLimitKg": 1.8,
+      "orbitOptionsKm": [
+        400,
+        550,
+        800
+      ],
+      "defaultOrbitKm": 550,
+      "launchSites": [
+        "sonmiani",
+        "cape_canaveral"
+      ],
+      "durationDays": 30,
+      "groundContactsPerDay": 4,
+      "contactMinutes": 8,
+      "imagingPassesPerDay": 1,
+      "imagesPerPass": 3,
+      "seed": 1962,
+      "illustrative": true,
+      "notes": "Challenge variant of FloodWatch-1: mass limit 1.8 kg instead of 4.0 kg.",
+      "successCriteria": [
+        {
+          "id": "reach_orbit",
+          "text": "Reach orbit and deploy the CubeSat",
+          "metric": "deployed",
+          "threshold": 1
+        },
+        {
+          "id": "survive_30d",
+          "text": "Keep the satellite alive for 30 days",
+          "metric": "daysAlive",
+          "threshold": 30
+        },
+        {
+          "id": "images_20",
+          "text": "Downlink at least 20 usable images",
+          "metric": "imagesDownlinked",
+          "threshold": 20
+        },
+        {
+          "id": "on_budget",
+          "text": "Stay within the 7.72 M USD budget",
+          "metric": "costMUSD",
+          "threshold": 7.72
+        }
+      ],
+      "randomEvents": [
+        {
+          "id": "ev_solar_storm",
+          "day": 12,
+          "type": "solar_storm",
+          "effect": "computer_reboot",
+          "value": 1,
+          "codexId": "data_budget"
+        },
+        {
+          "id": "ev_ground_outage",
+          "day": 20,
+          "type": "ground_outage",
+          "effect": "no_downlink",
+          "value": 1,
+          "codexId": "downlink"
+        },
+        {
+          "id": "ev_battery_ageing",
+          "day": 25,
+          "type": "battery_ageing",
+          "effect": "capacity_loss",
+          "value": 10,
+          "codexId": "battery_dod"
+        }
+      ],
+      "scoring": {
+        "success": 40,
+        "science": 25,
+        "budget": 10,
+        "margins": 10,
+        "decisionQuality": 10,
+        "collaboration": 5
+      },
+      "rewardImages": [
+        {
+          "date": "2022-06-25",
+          "title": "Lake Manchar before the floods",
+          "resource": "Images/Landsat/manchar_2022_06_25",
+          "sourceUrl": "https://science.nasa.gov/earth/earth-observatory/lake-manchar-is-overflowing-150306/"
+        },
+        {
+          "date": "2022-08-28",
+          "title": "Lake Manchar overflowing",
+          "resource": "Images/Landsat/manchar_2022_08_28",
+          "sourceUrl": "https://science.nasa.gov/earth/earth-observatory/lake-manchar-is-overflowing-150306/"
+        },
+        {
+          "date": "2022-09-05",
+          "title": "Floodwater spreading across the plain",
+          "resource": "Images/Landsat/manchar_2022_09_05",
+          "sourceUrl": "https://science.nasa.gov/earth/earth-observatory/lake-manchar-is-overflowing-150306/"
+        }
+      ],
+      "rewardCredit": "NASA Earth Observatory images by Joshua Stevens, using Landsat data from the U.S. Geological Survey.",
+      "codexIds": [
+        "landsat",
+        "gsd",
+        "downlink",
+        "eclipse",
+        "battery_dod"
+      ]
+    },
+    {
+      "id": "moonshot",
+      "name": "Moonshot",
+      "priority": "P0",
+      "difficulty": "Advanced",
+      "objective": "Fly the Saturn V to a 185 km parking orbit with at least 2,800 m/s left in the S-IVB for trans-lunar injection.",
+      "description": "Recreate the first half of an Apollo launch with the real Saturn V stage data.",
+      "rocketOptions": [ "saturn_v" ],
+      "payloadType": "apollo",
+      "parkingOrbitKm": 185,
+      "requiredDeltaVLeftMs": 2800,
+      "launchSites": [ "cape_canaveral" ],
+      "seed": 1969,
+      "illustrative": true,
+      "notes": "2,800 m/s is a game threshold, tuned with tools/sim: the autopilot profile in rockets.json leaves about 2,960 to 2,990 m/s for pitch kicks of 2 to 6 degrees and about 2,665 m/s for 1 degree. The lumped interstage + escape-tower mass drops with the S-II; the 2,000 kg Instrument Unit stays.",
+      "successCriteria": [
+        { "id": "parking_orbit", "text": "Reach a 185 km parking orbit", "metric": "periapsisKm", "threshold": 170 },
+        { "id": "tli_margin", "text": "Keep 2,800 m/s in the S-IVB for TLI", "metric": "deltaVLeftMs", "threshold": 2800 }
+      ],
+      "scoring": { "success": 60, "science": 0, "budget": 0, "margins": 25, "decisionQuality": 15, "collaboration": 0 },
+      "codexIds": [ "saturn_v", "f1_engine", "j2_engine", "delta_v" ]
+    },
+    {
+      "id": "rehbar_1962",
+      "name": "Rehbar-I, 1962",
+      "priority": "P0",
+      "difficulty": "Beginner",
+      "objective": "Fly a two-stage solid sounding rocket from Sonmiani to about 130 km and release a sodium-vapour cloud.",
+      "description": "On 7 June 1962 Pakistan launched its first rocket, Rehbar-I, from Sonmiani near Karachi: a two-stage Nike-Cajun flown with NASA support.",
+      "rocketOptions": [ "rehbar_nike_cajun" ],
+      "payloadType": "sounding",
+      "targetApogeeKm": 130,
+      "launchSites": [ "sonmiani" ],
+      "seed": 1962,
+      "storyCard": "Rehbar-I lifted off from Sonmiani on 7 June 1962. Its sodium-vapour cloud let scientists on the ground watch winds high in the upper atmosphere.",
+      "notes": "A flight-only mission: no CubeSat. The rocket is game values in the spirit of the Nike-Cajun, tuned with tools/sim to reach about 130 km for any pitch kick from 1 to 6 degrees.",
+      "scoring": { "success": 60, "science": 0, "budget": 0, "margins": 25, "decisionQuality": 15, "collaboration": 0 },
+      "successCriteria": [
+        { "id": "apogee", "text": "Reach about 130 km", "metric": "apogeeKm", "threshold": 120 }
+      ],
+      "codexIds": [ "rehbar_1962" ]
+    },
+    {
+      "id": "failure_apollo12",
+      "name": "Failure Lab: Apollo 12 lightning",
+      "priority": "P1",
+      "difficulty": "Intermediate",
+      "locked": true,
+      "objective": "Lightning strikes your Saturn V twice during ascent. Pick the switch that brings the telemetry back.",
+      "rocketOptions": [ "saturn_v" ],
+      "payloadType": "apollo",
+      "launchSites": [ "cape_canaveral" ],
+      "seed": 1114,
+      "codexIds": [ "apollo12_lightning", "telemetry" ],
+      "clientNote": "EECOM console, 14 Nov 1969. Lightning just hit the stack. Telemetry is garbage. You have 20 seconds.",
+      "rewardPoints": 300,
+      "consoleChoices": [
+        { "id": "sce_aux", "label": "SCE to AUX", "correctAtStep": 1, "why": "Right. The Signal Conditioning Equipment had dropped off its normal supply. On auxiliary power it reads the sensors again and telemetry comes back." },
+        { "id": "fc_reset", "label": "Fuel cells: RESET", "correctAtStep": 2, "why": "Right. With good data you can see the fuel cells tripped offline. Resetting them brings the spacecraft's main power back." },
+        { "id": "abort", "label": "ABORT (launch escape)", "correctAtStep": 0, "why": "Too early. The Saturn V's own guidance was flying perfectly on its separate systems. Aborting would end the mission for a spacecraft problem you can fix." },
+        { "id": "pcm_cycle", "label": "Telemetry PCM: cycle", "correctAtStep": 0, "why": "The radio link is fine. The garbage comes from the sensors' signal conditioner losing power, so cycling the transmitter changes nothing." },
+        { "id": "bus_tie", "label": "Main bus tie: OFF", "correctAtStep": 0, "why": "That would cut the batteries that are keeping the spacecraft alive right now. Never remove power you still have." },
+        { "id": "wait", "label": "Wait and watch", "correctAtStep": 0, "why": "Every second without data is a second you can't see what failed. The call has to be made now." }
+      ],
+      "lesson": "Redundancy saved Apollo 12. The rocket's instrument unit kept steering on its own power while the spacecraft recovered. Flight controller John Aaron recognised the strange telemetry pattern from a test a year earlier and made the call: 'Try SCE to AUX.'"
+    },
+    {
+      "id": "failure_broken_pathfinder",
+      "name": "Failure Lab: Broken Pathfinder",
+      "priority": "P1",
+      "difficulty": "Beginner",
+      "locked": true,
+      "objective": "A Pathfinder came back from the pad with three faults. Find and fix them before it flies.",
+      "rocketOptions": [ "pathfinder" ],
+      "payloadType": "cubesat_3u",
+      "launchSites": [ "sonmiani" ],
+      "seed": 2026,
+      "codexIds": [ "star_pattern", "pyro_separation", "torque" ],
+      "clientNote": "Pad crew report: 'Something rattled on the interstage and stage 2 never lit in the last test.' Three faults. Find them all.",
+      "rewardPoints": 300,
+      "seededFaults": [ "bolts_missing:j_interstage_s2:4", "unplugged:w_pyro3", "wrong_port:w_fc_imu:av_flight_computer/DATA_3" ],
+      "lesson": "Most launch failures are small integration mistakes: a missing bolt, a connector in the wrong socket. Real teams catch them with checklists, inspection and a second pair of eyes, never by assuming."
+    },
+    {
+      "id": "failure_loose_fairing",
+      "name": "Failure Lab: Loose fairing",
+      "priority": "P1",
+      "difficulty": "Beginner",
+      "locked": true,
+      "objective": "The payload fairing came back from inspection with loose bolts and one pyro line unplugged. Find the faults and fix them before it flies.",
+      "rocketOptions": [ "pathfinder" ],
+      "payloadType": "cubesat_3u",
+      "launchSites": [ "sonmiani" ],
+      "seed": 2027,
+      "codexIds": [ "torque", "pyro_separation" ],
+      "clientNote": "Pad crew report: 'The fairing halves rattle in the wind, and the separation line to channel 4 looks slack.' Two faults. Find them.",
+      "rewardPoints": 250,
+      "seededFaults": [ "bolts_missing:j_fairing_left:3", "bolts_missing:j_fairing_right:2", "unplugged:w_pyro4" ],
+      "lesson": "A fairing that is not bolted on evenly can come apart in flight, and one that is never told to separate stays on forever and traps the satellite inside. Inspection means checking both."
+    },
+    {
+      "id": "failure_silent_rocket",
+      "name": "Failure Lab: Silent rocket",
+      "priority": "P1",
+      "difficulty": "Beginner",
+      "locked": true,
+      "objective": "Ground control lost the rocket's telemetry in the last test. Find the two broken links in the avionics ring.",
+      "rocketOptions": [ "pathfinder" ],
+      "payloadType": "cubesat_3u",
+      "launchSites": [ "sonmiani" ],
+      "seed": 2028,
+      "codexIds": [ "telemetry", "downlink" ],
+      "clientNote": "Test report: 'Loss of signal from T+0. The rocket flew, but nobody on the ground could see how.' Two faults. Find them.",
+      "rewardPoints": 250,
+      "seededFaults": [ "unplugged:w_tlm_ant", "unplugged:w_fc_tlm" ],
+      "lesson": "Telemetry needs three things: power, data from the flight computer, and an antenna. Lose any link and the flight is blind. Engineers learn from flights only because the data comes home."
+    },
+    {
+      "id": "failure_wandering_rocket",
+      "name": "Failure Lab: Wandering rocket",
+      "priority": "P1",
+      "difficulty": "Intermediate",
+      "locked": true,
+      "objective": "The rocket drifted off course in the last test. The IMU is the only part that knows which way is up. Find the two faults.",
+      "rocketOptions": [ "pathfinder" ],
+      "payloadType": "cubesat_3u",
+      "launchSites": [ "sonmiani" ],
+      "seed": 2029,
+      "codexIds": [ "telemetry", "gravity_turn" ],
+      "clientNote": "Test report: 'Guidance drifted from the first second, and the pitch error kept growing.' Two faults. Find them.",
+      "rewardPoints": 300,
+      "seededFaults": [ "unplugged:w_pdu_imu", "wrong_port:w_fc_imu:av_flight_computer/DATA_3" ],
+      "lesson": "A sensor that is unpowered, or whose data goes to the wrong connector, gives the computer nothing to steer by. Plug-in mistakes are among the most common causes of real test-flight problems."
+    },
+    {
+      "id": "sandbox",
+      "name": "Sandbox",
+      "priority": "P1",
+      "difficulty": "Free build",
+      "locked": true,
+      "objective": "No budget, no limits: build anything and fly it.",
+      "rocketOptions": [ "pathfinder", "saturn_v" ],
+      "payloadType": "cubesat_3u",
+      "budgetMUSD": 0,
+      "orbitOptionsKm": [ 400, 550, 800 ],
+      "defaultOrbitKm": 550,
+      "launchSites": [ "sonmiani", "cape_canaveral" ],
+      "durationDays": 30,
+      "groundContactsPerDay": 4,
+      "contactMinutes": 8,
+      "imagingPassesPerDay": 1,
+      "imagesPerPass": 3,
+      "seed": 0
+    }
+  ]
+}

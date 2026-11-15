@@ -1,0 +1,23 @@
+// Smoke test of the PRODUCTION build (vite preview): loads, opens rooms through real clicks, no console errors, models and data load.
+import { chromium } from 'playwright';
+const url = process.argv[2] || 'http://localhost:5300/';
+const browser = await chromium.launch({ args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
+const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
+const errors = []; const failed = [];
+page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
+page.on('pageerror', (e) => errors.push(e.message));
+page.on('requestfailed', (r) => failed.push(r.url()));
+page.on('response', (r) => { if (r.status() >= 400) failed.push(`${r.status()} ${r.url()}`); });
+await page.addInitScript(() => localStorage.setItem('tminus.settings.v1', JSON.stringify({ quality: 'low' })));
+await page.goto(url); await page.waitForSelector('h1', { timeout: 30000 });
+const click = (re) => page.evaluate((src) => [...document.querySelectorAll('button')].find((b) => new RegExp(src).test(b.textContent))?.click(), re);
+await click('Missions'); await page.waitForSelector('text=Mission Briefing');
+await click('Start building'); await page.waitForSelector('text=Parts bin');
+await click('Install'); await page.waitForTimeout(500);
+await page.keyboard.press('h'); await page.waitForSelector('text=HOUSTON here'); await click('Next step'); await page.waitForTimeout(400);
+const msgs = await page.locator('text=/NEXT/').count();
+console.log('production build: bay + HOUSTON next-step message:', msgs > 0 ? 'ok' : 'MISSING');
+await page.keyboard.press('Escape');
+const bad = failed.filter((f) => !/fonts\.(googleapis|gstatic)/.test(f));
+console.log(errors.length ? 'CONSOLE ERRORS:\n' + errors.join('\n') : 'No console errors.'); console.log(bad.length ? 'FAILED REQUESTS:\n' + bad.join('\n') : 'No failed requests (other than optional Google Fonts).');
+await browser.close(); process.exit(errors.length || bad.length || !msgs ? 1 : 0);
