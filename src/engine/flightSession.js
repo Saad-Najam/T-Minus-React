@@ -185,6 +185,12 @@ export class FlightSession {
     this.paused = true;
   }
 
+  /** Jumps the simulation forward to a given flight time (events, stage releases and the feed still happen on the way). Used by the demo recorder. */
+  jumpTo(t) {
+    let guard = 0;
+    while (this.launched && !this.ended && this.sim.timeS < t && guard++ < 200000) { this.sim.step(); this._afterStep(); }
+  }
+
   /** Jumps to the end of the flight (Judge Mode, "skip"). The events and the record are the same as flying it live. */
   fastForward() {
     let guard = 0;

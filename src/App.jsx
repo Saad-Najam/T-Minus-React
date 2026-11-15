@@ -61,7 +61,7 @@ export default function App() {
     <div className="relative h-full w-full overflow-hidden">
       <Boundary key={screen}>
         <AnimatePresence mode="wait">
-          <motion.div key={screen} className="h-full w-full" initial={{ opacity: 0, y: 14, filter: 'blur(6px)', scale: 0.99 }} animate={{ opacity: 1, y: 0, filter: 'blur(0px)', scale: 1 }} exit={{ opacity: 0, y: -10, filter: 'blur(4px)' }} transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}>
+          <motion.div key={screen} className="h-full w-full" initial={{ opacity: 0, y: 14, filter: 'blur(6px)' }} animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }} exit={{ opacity: 0, y: -10, filter: 'blur(4px)' }} transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}>
             <Suspense fallback={<div className="flex h-full items-center justify-center"><Spinner label="Loading room" /></div>}><Screen /></Suspense>
           </motion.div>
         </AnimatePresence>

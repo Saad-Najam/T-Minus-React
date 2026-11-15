@@ -1,0 +1,11 @@
+import { startRecorder, OVERLAY } from './engine.mjs';
+const rec = await startRecorder({ url: 'http://localhost:5300/?hooks', outDir: 'demo-work/probe' });
+await rec.page.evaluate(OVERLAY); await rec.page.waitForTimeout(3500);
+const nowReal = await rec.page.evaluate(() => performance.now());
+rec.recording = true; const t0 = Date.now();
+await rec.caption('Probe caption: <b>real frames</b>, fake clock'); await rec.moveTo(420, 380, 1.2);
+await rec.wait(2.0);
+const secs = (Date.now() - t0) / 1000;
+console.log(`recorded ${rec.frame} frames in ${secs.toFixed(1)} s real time => ${(secs / rec.frame * 1000).toFixed(0)} ms/frame; est. 5400 frames = ${(secs / rec.frame * 5400 / 60).toFixed(0)} min`);
+console.log('page errors:', rec.errors.length ? rec.errors.join(' | ') : 'none');
+await rec.finish();

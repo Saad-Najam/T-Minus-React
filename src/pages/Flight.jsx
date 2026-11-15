@@ -67,6 +67,8 @@ export default function Flight() {
     return s;
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  useEffect(() => { if (import.meta.env.DEV || new URLSearchParams(window.location.search).has('hooks')) { window.__flight = session; return () => { if (window.__flight === session) delete window.__flight; }; } return undefined; }, [session]);
+
   // frame loop
   useEffect(() => {
     let raf; let last = performance.now();

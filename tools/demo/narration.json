@@ -1,0 +1,22 @@
+{
+  "voice": "Microsoft Zira Desktop",
+  "rate": 0,
+  "cues": [
+    { "id": "s1", "at": "s1", "off": 0.5, "text": "Meet T-MINUS. Build a CubeSat and its rocket, launch it with real physics, and learn from every failure." },
+    { "id": "s2", "at": "s2", "off": 0.7, "text": "Choose a mission. FloodWatch-1: photograph the Indus floods for thirty days, within a strict budget, mass, power and data limit." },
+    { "id": "s3", "at": "s3", "off": 1.0, "text": "In the Integration Bay we install every subsystem. Live budgets show mass, cost, power, battery and data, each with a one-line why." },
+    { "id": "wire", "at": "wire", "off": 0.4, "text": "Then we wire it. Every cable follows real engineering rules, and appears on the satellite in three D." },
+    { "id": "s4", "at": "s4", "off": 0.9, "text": "Now the rocket. Parts stack bottom-first, and mistakes are refused with a reason. Every joint is bolted in star order, in three torque passes." },
+    { "id": "rush", "at": "rush", "off": 0.3, "text": "But here we rush joint one: clockwise, one pass, three bolts missing. HOUSTON, the built-in mentor, scans the build and flags it." },
+    { "id": "s5", "at": "s5", "off": 1.0, "text": "At the pad the checklist shows the failing joint, and the crew launches anyway." },
+    { "id": "fail_launch", "at": "fail_launch", "off": 0.4, "text": "Real physics takes over: gravity, drag, and thrust that changes with altitude." },
+    { "id": "fail_boom", "at": "fail_boom", "off": 0.4, "text": "At max-Q, the joint fails." },
+    { "id": "s6", "at": "s6", "off": 1.2, "text": "The debrief doesn't just say you failed. It traces the cause: joint one, rushed bolting, three missing bolts." },
+    { "id": "s7", "at": "s7", "off": 0.6, "text": "So we fix it: all twelve bolts, in star order, three passes. Then we launch again." },
+    { "id": "ok_launch", "at": "ok_launch", "off": 0.5, "text": "Stage separation. Fairing release." },
+    { "id": "ok_orbit", "at": "ok_orbit", "off": -3.2, "text": "Orbit achieved, and the CubeSat deploys." },
+    { "id": "s8", "at": "s8", "off": 0.9, "text": "Thirty simulated days of operations. Ninety-seven out of a hundred, three stars, and real NASA Landsat flood images, at our camera's resolution." },
+    { "id": "s9", "at": "s9", "off": 0.5, "text": "There is more: a detailed Saturn V Moonshot mission, a Failure Lab with Apollo twelve, a searchable Space Guide, and it works on phones and tablets." },
+    { "id": "s10", "at": "s10", "off": 1.0, "text": "T-MINUS. Build it. Launch it. Learn from it." }
+  ]
+}

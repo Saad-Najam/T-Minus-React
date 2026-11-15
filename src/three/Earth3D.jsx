@@ -30,14 +30,14 @@ function cloudTexture() {
   const noise = (px, py, period) => { const gx = (px / W) * period; const gy = (py / H) * (period / 2); const i = Math.floor(gx); const j = Math.floor(gy); const fx = gx - i; const fy = gy - j; const u = fx * fx * (3 - 2 * fx); const v = fy * fy * (3 - 2 * fy); const w = Math.floor(period);
     const a = hash(i % w, j); const b = hash((i + 1) % w, j); const cc = hash(i % w, j + 1); const d = hash((i + 1) % w, j + 1); return a + (b - a) * u + (cc - a) * v + (a - b - cc + d) * u * v; };
   for (let py = 0; py < H; py++) for (let px = 0; px < W; px++) {
-    let n = 0; let amp = 0.55; let per = 6; for (let o = 0; o < 5; o++) { n += noise(px, py, per) * amp; amp *= 0.5; per *= 2; }
-    const lat = Math.abs(py / H - 0.5) * 2; const a = Math.max(0, Math.min(1, (n - 0.5) * 3.2)) * (1 - 0.35 * lat * lat); const k = (py * W + px) * 4; img.data[k] = img.data[k + 1] = img.data[k + 2] = 255; img.data[k + 3] = a * 235;
+    let n = 0; let amp = 0.5; let per = 9; for (let o = 0; o < 6; o++) { n += noise(px, py, per) * amp; amp *= 0.52; per *= 2; }
+    const lat = Math.abs(py / H - 0.5) * 2; const a = Math.max(0, Math.min(1, (n - 0.56) * 4.2)) * (1 - 0.9 * lat ** 4); const k = (py * W + px) * 4; img.data[k] = img.data[k + 1] = img.data[k + 2] = 255; img.data[k + 3] = a * 205;
   }
   x.putImageData(img, 0, 0); cloudTex = new THREE.CanvasTexture(c); cloudTex.wrapS = THREE.RepeatWrapping; cloudTex.colorSpace = THREE.SRGBColorSpace; return cloudTex;
 }
 function CloudShell({ radius }) {
   const ref = useRef(); useFrame((_, dt) => { if (ref.current) ref.current.rotation.y += dt * 0.004; });
-  return <mesh ref={ref} scale={radius * 1.007}><sphereGeometry args={[1, 96, 96]} /><meshStandardMaterial map={cloudTexture()} transparent depthWrite={false} roughness={1} metalness={0} /></mesh>;
+  return <mesh ref={ref} scale={radius * 1.007}><sphereGeometry args={[1, 96, 96]} /><meshStandardMaterial map={cloudTexture()} transparent depthWrite={false} roughness={1} metalness={0} emissive="#ffffff" emissiveMap={cloudTexture()} emissiveIntensity={0.16} /></mesh>;
 }
 
 export function Atmosphere({ radius, thickness = 0.04, color, opacity = 1 }) {
